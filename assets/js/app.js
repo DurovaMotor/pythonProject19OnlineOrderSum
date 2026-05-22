@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   var LANG_KEY = "hightac-directory-language-v1";
   var DEFAULT_LANG = "fr";
 
@@ -48,7 +48,11 @@
     lang: readStorage(LANG_KEY, DEFAULT_LANG)
   };
 
-  document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 
   function init() {
     initLanguageSwitchers();

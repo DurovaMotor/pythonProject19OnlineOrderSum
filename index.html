@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
@@ -7,6 +7,7 @@
     <meta name="description" content="Catalogue HIGHTAC - selection des modeles.">
     <link rel="icon" href="./Database/MotorPictures/download.png?v=20260511-grpic2">
     <link rel="stylesheet" href="./assets/css/styles.css?v=20260511-2">
+    <script src="./assets/js/access-guard.js?v=20260522-ipgate"></script>
   </head>
   <body>
     <div class="site-backdrop" aria-hidden="true">
@@ -89,7 +90,32 @@
         </div>
       </section>
     </main>
+    <script>
+      (function () {
+        var sources = [
+          "./assets/js/app.js?v=20260511-2"
+        ];
 
-    <script src="./assets/js/app.js?v=20260511-2"></script>
+        function loadScript(src) {
+          return new Promise(function (resolve, reject) {
+            var script = document.createElement("script");
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.body.appendChild(script);
+          });
+        }
+
+        if (window.HIGHTAC_ACCESS_GUARD && window.HIGHTAC_ACCESS_GUARD.loadScripts) {
+          window.HIGHTAC_ACCESS_GUARD.loadScripts(sources);
+        } else {
+          sources.reduce(function (promise, src) {
+            return promise.then(function () {
+              return loadScript(src);
+            });
+          }, Promise.resolve());
+        }
+      })();
+    </script>
   </body>
 </html>
